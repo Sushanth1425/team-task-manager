@@ -30,8 +30,9 @@ exports.addMember= async (req, res) => {
 
     const user= await User.findOne({email: req.body.email})
     if (!user) return res.status(404).json({message: 'User not found'})
-    if (project.members.includes(user._id)) return res.status(400).json({message: 'User already added'})
-    
+    const exists= project.members.some(m=> m.toString() === user._id.toString())
+    if(exists) {return res.status(400).json({message: 'User already added'})
+  }
     project.members.push(user._id)
     await project.save()
 

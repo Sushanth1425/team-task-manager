@@ -2,6 +2,7 @@ const express= require('express')
 require('dotenv').config()
 const cors= require('cors')
 const helmet= require('helmet')
+const morgan = require('morgan')
 
 const connetDB= require('./utils/db')
 connetDB()
@@ -15,6 +16,7 @@ app.use(cors({
 }))
 app.use(express.json())
 app.use(helmet())
+app.use(morgan('dev'))
 
 const authRoutes = require('./routes/authRoutes')
 const projectRoutes = require('./routes/projectRoutes')

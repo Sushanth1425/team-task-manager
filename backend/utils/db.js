@@ -6,7 +6,7 @@ const connetDB= async()=>{
     console.log(`DB connected to ${mongoose.connection.host}`)
   } 
   catch (err) {
-    console.error(" MongoDB Connection Failed", err.message)
+    console.error(" MongoDB Connection Failed", err)
   }
 }
 

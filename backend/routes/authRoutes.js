@@ -4,5 +4,6 @@ const {signup, login} = require('../controllers/authController')
 
 router.post('/signup', signup)
 router.post('/login', login)
+//router.delete('/:id', auth, deleteTask)
 
 module.exports = router

@@ -1,10 +1,13 @@
 const router = require('express').Router()
 const auth = require('../middleware/authMiddleware')
 const Task = require('../models/Task')
+const Project = require('../models/Project')
 
 router.get('/', auth, async(req,res)=>{
   try{
-    const tasks = await Task.find()
+    const projects = await Project.find({members: req.user.id})
+    const projectIds = projects.map(p=> p._id)
+    const tasks = await Task.find({project: {$in: projectIds}})
     const total = tasks.length
     const todo = tasks.filter(t=> t.status === 'To Do').length
     const progress = tasks.filter(t=> t.status === 'In Progress').length

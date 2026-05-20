@@ -14,7 +14,11 @@ router.get('/', auth, async(req,res)=>{
     const done = tasks.filter(t=> t.status === 'Done').length
     const overdue = tasks.filter(t=> t.dueDate && new Date(t.dueDate)< new Date() && t.status !== 'Done').length
 
-    res.json({total, todo, progress, done, overdue})
+    const tasksPerUser = {}
+    tasks.forEach(task=> {const userId = task.assignedTo?.toString()
+      if(userId) tasksPerUser[userId] = (tasksPerUser[userId] || 0) + 1})
+
+    res.json({total, todo, progress, done, overdue, tasksPerUser})
     
   }catch(err){
     res.status(500).json({message: err.message})
